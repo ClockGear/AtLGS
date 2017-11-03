@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="@LGS:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="atlgs.war">
+      <element id="artifact" artifact-name="@LGS:war exploded" />
+    </root>
+  </artifact>
+</component>
