@@ -10,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @NamedQueries(
-        @NamedQuery(name = "getAllPresences", query = "select p from Presence p")
+        @NamedQuery(name = "getAll", query = "select p from Presence p")
 )
 public class Presence {
     @Id

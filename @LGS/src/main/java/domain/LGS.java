@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "getAllLGS", query = "SELECT l from LGS l")
+        @NamedQuery(name = "getAll", query = "SELECT l from LGS l")
 })
 public class LGS {
     @Id

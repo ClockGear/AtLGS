@@ -9,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQueries(
-        @NamedQuery(name = "getAllFormats", query = "select f from Format f")
+        @NamedQuery(name = "getAll", query = "select f from Format f")
 )
 public class Format {
     @Id

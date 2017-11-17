@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQueries(
-        @NamedQuery(name = "getAllEventPresences", query = "select ep from EventPresence ep")
+        @NamedQuery(name = "getAll", query = "select ep from EventPresence ep")
 )
 public class EventPresence {
     @Id
