@@ -43,8 +43,17 @@ public class JPA_User extends Facade<User>{
         return super.find(id);
     }
 
-    @Override
+    public User find(String email) {
+        User foundUser = null;
+        for (User user : getAll()) {
+            if (user.getEmail().equals(email)) {
+                foundUser = user;
+            }
+        }
+        return foundUser;
+    }
+
     public List<User> getAll() {
-        return super.getAll();
+        return this.getEntityManager().createNamedQuery("getAllUsers",User.class).getResultList();
     }
 }

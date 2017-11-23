@@ -43,8 +43,7 @@ public class JPA_LGS extends Facade<LGS> {
         return super.find(id);
     }
 
-    @Override
     public List<LGS> getAll() {
-        return super.getAll();
+        return this.getEntityManager().createNamedQuery("getAllLGS",LGS.class).getResultList();
     }
 }

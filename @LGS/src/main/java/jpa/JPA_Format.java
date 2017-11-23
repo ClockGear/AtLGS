@@ -43,8 +43,7 @@ public class JPA_Format extends Facade<Format> {
         return super.find(id);
     }
 
-    @Override
     public List<Format> getAll() {
-        return super.getAll();
+        return this.getEntityManager().createNamedQuery("getAllFormats",Format.class).getResultList();
     }
 }

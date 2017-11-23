@@ -43,8 +43,7 @@ public class JPA_GameEvent extends Facade<GameEvent> {
         return super.find(id);
     }
 
-    @Override
     public List<GameEvent> getAll() {
-        return super.getAll();
+        return this.getEntityManager().createNamedQuery("getAllGameEvents",GameEvent.class).getResultList();
     }
 }

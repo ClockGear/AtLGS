@@ -1,36 +1,48 @@
 package domain;
 
+import enums.Role;
+
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by Dennis van Opstal on 10-11-2017.
  */
 @Entity
 @NamedQueries(
-        @NamedQuery(name = "getAll", query = "select u from User u")
+        @NamedQuery(name = "getAllUsers", query = "select u from User u")
 )
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String name;
-    private String username;
+    private String firstName;
+    private String lastName;
     private String password;
+    @Column(unique = true)
     private String email;
+    private Role role;
+    private String token;
+    private Date tokenExpiration;
+    private byte[] salt;
 
-    public User(long id, String name, String username, String password, String email) {
+    public User(long id, String name, String username, String password, String email, Role role, byte[] salt) {
         this.id = id;
-        this.name = name;
-        this.username = username;
+        this.firstName = name;
+        this.lastName = username;
         this.password = password;
         this.email = email;
+        this.role = role;
+        this.salt = salt;
     }
 
-    public User(String name, String username, String password, String email) {
-        this.name = name;
-        this.username = username;
+    public User(String name, String username, String password, String email, Role role, byte[] salt) {
+        this.firstName = name;
+        this.lastName = username;
         this.password = password;
         this.email = email;
+        this.role = role;
+        this.salt = salt;
     }
 
     public User() {
@@ -41,12 +53,12 @@ public class User {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getUsername() {
-        return username;
+    public String getLastName() {
+        return lastName;
     }
 
     public String getPassword() {
@@ -55,5 +67,30 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public Date getTokenExpiration() {
+        return tokenExpiration;
+    }
+
+    public void refreshToken(String token, Date tokenExpiration) {
+        this.token = token;
+        this.tokenExpiration = tokenExpiration;
+    }
+
+    public byte[] getSalt() {
+        return salt;
     }
 }

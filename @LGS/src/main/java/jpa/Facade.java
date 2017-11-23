@@ -55,8 +55,4 @@ public abstract class Facade<T> {
     public T find(long id) {
         return this.getEntityManager().find(this.entityClass, id);
     }
-
-    public List<T> getAll() {
-        return this.getEntityManager().createNamedQuery("getAll",entityClass).getResultList();
-    }
 }

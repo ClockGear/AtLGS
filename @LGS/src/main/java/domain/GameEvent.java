@@ -10,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @NamedQueries(
-        @NamedQuery(name = "getAll", query = "select ge from GameEvent ge")
+        @NamedQuery(name = "getAllGameEvents", query = "select ge from GameEvent ge")
 )
 public class GameEvent {
     @Id

@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @NamedQueries(
-        @NamedQuery(name = "getAll", query = "select ot from OpenTime ot")
+        @NamedQuery(name = "getAllOpenTimes", query = "select ot from OpenTime ot")
 )
 public class OpenTime {
     @Id

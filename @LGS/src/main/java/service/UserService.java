@@ -31,6 +31,10 @@ public class UserService implements IService<User>{
         return jpaUser.find(id);
     }
 
+    public User find(String email) {
+        return jpaUser.find(email);
+    }
+
     public List<User> getAll() {
         return jpaUser.getAll();
     }

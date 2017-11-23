@@ -43,8 +43,7 @@ public class JPA_EventPresence extends Facade<EventPresence> {
         return super.find(id);
     }
 
-    @Override
     public List<EventPresence> getAll() {
-        return super.getAll();
+        return this.getEntityManager().createNamedQuery("getAllEventPresences",EventPresence.class).getResultList();
     }
 }
