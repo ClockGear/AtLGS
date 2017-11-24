@@ -1,0 +1,180 @@
+package com.dvo.lgs;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.dvo.lgs.volley.AppController;
+import com.dvo.lgs.volley.BetterStringRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class RegisterActivity extends AppCompatActivity {
+
+    private static final String VOLLEY_TAG = "VOLLEY - REGISTER";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register);
+    }
+
+    public void register(View view) {
+        final String password = String.valueOf(((TextView)findViewById(R.id.etRegisterPassword)).getText());
+        String password2 = String.valueOf(((TextView)findViewById(R.id.etRegisterPassword2)).getText());
+        if (!password.equals(password2)) {
+            createNewErrorDialog(R.string.password_mismatch);
+        } else {
+            String requestTag = "register_request";
+            String url = getString(R.string.api_url) + "/user";
+            final String firstName = String.valueOf(((TextView)findViewById(R.id.etRegisterFirstName)).getText());
+            final String lastName = String.valueOf(((TextView)findViewById(R.id.etRegisterLastName)).getText());
+            final String email = String.valueOf(((TextView)findViewById(R.id.etRegisterEmail)).getText());
+            BetterStringRequest registerRequest = new BetterStringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.d(VOLLEY_TAG,response);
+                    try {
+                        JSONObject json = new JSONObject(response);
+                        if (!json.getBoolean("error")) {
+                            login(email, password);
+                        } else {
+                            createNewErrorDialog(R.string.err_something_wrong);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        createNewErrorDialog(R.string.err_something_wrong);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    String jsonString = error.getMessage();
+                    if (jsonString == null || jsonString.isEmpty()) {
+                        createNewErrorDialog(R.string.err_something_wrong);
+                    } else {
+                        Log.e(VOLLEY_TAG, jsonString);
+                        try {
+                            JSONObject json = new JSONObject(jsonString);
+                            String message = json.getString("message");
+                            switch (message) {
+                                case "Something went wrong while creating user.":
+                                    createNewErrorDialog(R.string.err_wrong_create_user);
+                                    break;
+                                case "Something went wrong while hashing the password.":
+                                    createNewErrorDialog(R.string.err_wrong_password_hash);
+                                    break;
+                                case "User with the given email already exists.":
+                                    createNewErrorDialog(R.string.err_email_exists);
+                                    break;
+                                default:
+                                    createNewErrorDialog(R.string.err_something_wrong);
+                                    break;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            createNewErrorDialog(R.string.err_something_wrong);
+                        }
+                    }
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String,String> params = new HashMap<>();
+                    params.put("firstName",firstName);
+                    params.put("lastName",lastName);
+                    params.put("email",email);
+                    params.put("password",password);
+                    return params;
+                }
+            };
+            AppController.getInstance().addToRequestQueue(registerRequest, requestTag);
+        }
+    }
+
+    private void login(final String email, final String password) {
+        String requestTag = "login_request";
+        String url = getString(R.string.api_url) + "/user/login";
+        BetterStringRequest loginRequest = new BetterStringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(VOLLEY_TAG, response);
+                try {
+                    JSONObject json = new JSONObject(response);
+                    if (!json.getBoolean("error")) {
+                        String token = json.getString("object");
+                        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.def_pref), Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString(getString(R.string.login_token), token);
+                        editor.apply();
+                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    } else {
+                        createNewErrorDialog(R.string.err_something_wrong);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String jsonString = error.getMessage();
+                if (jsonString == null || jsonString.isEmpty()) {
+                    createNewErrorDialog(R.string.err_something_wrong);
+                } else {
+                    Log.e(VOLLEY_TAG, jsonString);
+                    try {
+                        JSONObject json = new JSONObject(jsonString);
+                        String message = json.getString("message");
+                        switch (message) {
+                            case "The given password was incorrect.":
+                                createNewErrorDialog(R.string.err_password_wrong);
+                                break;
+                            case "User with the given email doesn't exist.":
+                                createNewErrorDialog(R.string.err_user_email_not_exist);
+                                break;
+                            default:
+                                createNewErrorDialog(R.string.err_something_wrong);
+                                break;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        createNewErrorDialog(R.string.err_something_wrong);
+                    }
+                }
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("email",email);
+                params.put("password",password);
+                return params;
+            }
+        };
+        AppController.getInstance().addToRequestQueue(loginRequest, requestTag);
+    }
+
+    private void createNewErrorDialog(int message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.error);
+        builder.setMessage(message);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+}

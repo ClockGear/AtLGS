@@ -1,3 +1,25 @@
 <resources>
-    <string name="app_name">\@LGS</string>
+    <string name="app_name" translatable="false">\@LGS</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Log in</string>
+    <string name="no_account_yet">Don\'t have an account yet? Click Here!</string>
+    <string name="forgot_password">Forgot your Password?</string>
+    <string name="err_not_implemented">Not Implemented Yet.</string>
+    <string name="api_url" translatable="false">http://145.93.125.210:8085/atlgs/api</string>
+    <string name="error">Error</string>
+    <string name="err_something_wrong">Something went wrong.</string>
+    <string name="err_password_wrong">The given password was incorrect.</string>
+    <string name="err_user_email_not_exist">User with the given email doesn\'t exist.</string>
+    <string name="register">Register</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="password_mismatch">Passwords didn\'t match.</string>
+    <string name="err_wrong_create_user">Something went wrong while creating user.</string>
+    <string name="err_wrong_password_hash">Something went wrong while hashing the password.</string>
+    <string name="err_email_exists">User with the given email already exists, please try a different email.</string>
+    <string name="def_pref" translatable="false">DefaultPreferences</string>
+    <string name="login_token" translatable="false">Login Token</string>
+    <string name="coming_soon">Coming Soon…</string>
 </resources>

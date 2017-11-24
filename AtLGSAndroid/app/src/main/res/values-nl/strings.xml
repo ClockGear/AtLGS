@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="email">Email</string>
+    <string name="password">Wachtwoord</string>
+    <string name="login">Log in</string>
+    <string name="no_account_yet">Heeft u nog geen account? Klik Hier!</string>
+    <string name="forgot_password">Wachwoord Vergeten?</string>
+    <string name="err_not_implemented">Nog niet geïmplementeerd.</string>
+    <string name="error">Error</string>
+    <string name="err_something_wrong">Er ging iets mis.</string>
+    <string name="err_password_wrong">Het gegeven wachtwoord was incorrect.</string>
+    <string name="err_user_email_not_exist">Er bestaat geen gebruik met het gegeven email.</string>
+    <string name="repeat_password">Herhaal Wachtwoord</string>
+    <string name="first_name">Voornaam</string>
+    <string name="register">Registreer</string>
+    <string name="last_name">Achternaam</string>
+    <string name="password_mismatch">Wachtwoorden komen niet overeen.</string>
+    <string name="err_wrong_create_user">Er ging iets mis bij het toevoegen van een gebruiker.</string>
+    <string name="err_wrong_password_hash">Er ging iets mis bij het hashen van het wachtwoord.</string>
+    <string name="err_email_exists">Een gebruiker met de gegeven email bestaat al, probeer a.u.b. een andere email.</string>
+    <string name="coming_soon">Komt Binnenkort…</string>
+</resources>

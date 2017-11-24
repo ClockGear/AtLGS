@@ -57,7 +57,7 @@ public class UserController {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
             }
         } else {
-            json = new JsonResponseObject(true,"User with email: " + email + " already exists.");
+            json = new JsonResponseObject(true,"User with the given email already exists.");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
     }
@@ -80,7 +80,7 @@ public class UserController {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
             }
         } else {
-            json = new JsonResponseObject(true,"User with email: " + email + " doesn't exist.");
+            json = new JsonResponseObject(true,"User with the given doesn't exist.");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
     }
@@ -108,7 +108,7 @@ public class UserController {
             json = new JsonResponseObject(false, "Successfully changed role!");
             return Response.status(Response.Status.OK).entity(json).build();
         } else {
-            json = new JsonResponseObject(true,"User with id: " + id + " doesn't exist.");
+            json = new JsonResponseObject(true,"User with the given id doesn't exist.");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
     }
@@ -123,7 +123,7 @@ public class UserController {
             json = new JsonResponseObject(false,user);
             return Response.status(Response.Status.OK).entity(json).build();
         } else {
-            json = new JsonResponseObject(true,"User with id: " + id + " doesn't exist.");
+            json = new JsonResponseObject(true,"User with the given id doesn't exist.");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
     }
