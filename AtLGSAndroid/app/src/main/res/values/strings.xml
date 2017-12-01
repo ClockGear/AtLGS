@@ -6,7 +6,7 @@
     <string name="no_account_yet">Don\'t have an account yet? Click Here!</string>
     <string name="forgot_password">Forgot your Password?</string>
     <string name="err_not_implemented">Not Implemented Yet.</string>
-    <string name="api_url" translatable="false">http://145.93.125.210:8085/atlgs/api</string>
+    <string name="api_url" translatable="false">http://145.93.125.250:8085/atlgs/api</string>
     <string name="error">Error</string>
     <string name="err_something_wrong">Something went wrong.</string>
     <string name="err_password_wrong">The given password was incorrect.</string>
@@ -22,4 +22,11 @@
     <string name="def_pref" translatable="false">DefaultPreferences</string>
     <string name="login_token" translatable="false">Login Token</string>
     <string name="coming_soon">Coming Soon…</string>
+    <string name="err_req_first_name">First Name is required.</string>
+    <string name="err_req_last_name">Last Name is required.</string>
+    <string name="err_req_email">Email is required.</string>
+    <string name="err_req_password">Password is required.</string>
+    <string name="err_min_8_char">Password needs to be at least 8 characters.</string>
+    <string name="err_password_contain">A password needs to contain at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 symbol.</string>
+    <string name="err_invalid_email">Email is invalid.</string>
 </resources>

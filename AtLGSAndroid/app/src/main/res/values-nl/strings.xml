@@ -19,4 +19,11 @@
     <string name="err_wrong_password_hash">Er ging iets mis bij het hashen van het wachtwoord.</string>
     <string name="err_email_exists">Een gebruiker met de gegeven email bestaat al, probeer a.u.b. een andere email.</string>
     <string name="coming_soon">Komt Binnenkort…</string>
+    <string name="err_req_first_name">Voornaam is verplicht.</string>
+    <string name="err_req_last_name">Achternaam is verplicht.</string>
+    <string name="err_req_email">Email is verplicht.</string>
+    <string name="err_req_password">Wachtwoord is verplicht.</string>
+    <string name="err_min_8_char">Wachtwoord moet minimaal 8 karakters lang zijn</string>
+    <string name="err_password_contain">Een wachtwoord moet op z\'n minst 1 hoofdletter, 1 kleine letter, 1 cijfer en 1 symbool hebben.</string>
+    <string name="err_invalid_email">Email is niet valide.</string>
 </resources>

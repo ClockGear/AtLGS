@@ -20,6 +20,8 @@ import com.dvo.lgs.volley.BetterStringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         String requestTag = "login_request";
         String url = getString(R.string.api_url) + "/user/login";
         final String email = String.valueOf(((TextView)findViewById(R.id.etLoginEmail)).getText());
-        final String password = String.valueOf(((TextView)findViewById(R.id.etLoginPassword)).getText());
+        String password = String.valueOf(((TextView)findViewById(R.id.etLoginPassword)).getText());
+        final String hashedPassword = hash(password);
         BetterStringRequest loginRequest = new BetterStringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -92,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
                 params.put("email",email);
-                params.put("password",password);
+                params.put("password",hashedPassword);
                 return params;
             }
         };
@@ -116,4 +119,23 @@ public class LoginActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+    //region Hash
+    private static String hash(String data) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(data.getBytes());
+            return bytesToHex(md.digest());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static String bytesToHex(byte[] bytes) {
+        StringBuilder result = new StringBuilder();
+        for (byte byt : bytes) result.append(Integer.toString((byt & 0xff) + 0x100, 16).substring(1));
+        return result.toString();
+    }
+    //endregion
 }
