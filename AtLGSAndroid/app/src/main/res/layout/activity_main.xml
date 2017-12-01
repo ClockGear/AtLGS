@@ -3,10 +3,66 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/coming_soon"/>
+
+    <!-- TODO Decide View Type (AppCompat) -->
+    <View
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/fragmentSelectionBar"
+        android:layout_alignParentStart="true"
+        android:background="@color/primaryColor"/>
+
+    <LinearLayout
+        android:id="@+id/fragmentSelectionBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:weightSum="60"
+        android:baselineAligned="false"
+        android:layout_alignParentBottom="true">
+
+        <RelativeLayout
+            android:id="@+id/fragmentButton1"
+            android:tag="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="30"
+            android:background="@color/primaryColor"
+            android:onClick="menuItemClick">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:text="@string/presence"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fragmentButton2"
+            android:tag="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="30"
+            android:background="@color/primaryDarkColor"
+            android:onClick="menuItemClick">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:text="@string/events"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

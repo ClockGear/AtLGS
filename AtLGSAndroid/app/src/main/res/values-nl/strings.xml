@@ -26,4 +26,6 @@
     <string name="err_min_8_char">Wachtwoord moet minimaal 8 karakters lang zijn</string>
     <string name="err_password_contain">Een wachtwoord moet op z\'n minst 1 hoofdletter, 1 kleine letter, 1 cijfer en 1 symbool hebben.</string>
     <string name="err_invalid_email">Email is niet valide.</string>
+    <string name="presence">Aanwezigheid</string>
+    <string name="events">Evenementen</string>
 </resources>

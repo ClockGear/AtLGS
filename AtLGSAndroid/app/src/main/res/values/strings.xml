@@ -29,4 +29,6 @@
     <string name="err_min_8_char">Password needs to be at least 8 characters.</string>
     <string name="err_password_contain">A password needs to contain at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 symbol.</string>
     <string name="err_invalid_email">Email is invalid.</string>
+    <string name="presence">Presence</string>
+    <string name="events">Events</string>
 </resources>
