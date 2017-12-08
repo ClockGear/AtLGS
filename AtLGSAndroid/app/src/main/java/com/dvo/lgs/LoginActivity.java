@@ -28,11 +28,13 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String VOLLEY_TAG = "VOLLEY - LOGIN";
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sharedPref = getSharedPreferences(getString(R.string.def_pref),Context.MODE_PRIVATE);
     }
 
     public void login(View view) {
@@ -49,11 +51,12 @@ public class LoginActivity extends AppCompatActivity {
                     JSONObject json = new JSONObject(response);
                     if (!json.getBoolean("error")) {
                         String token = json.getString("object");
-                        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.def_pref), Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(getString(R.string.login_token), token);
                         editor.apply();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     } else {
                         createNewErrorDialog(R.string.err_something_wrong);

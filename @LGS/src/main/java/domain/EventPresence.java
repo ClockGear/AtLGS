@@ -1,5 +1,7 @@
 package domain;
 
+import enums.Certainty;
+
 import javax.persistence.*;
 
 /**
@@ -13,6 +15,7 @@ public class EventPresence {
     @Id
     @GeneratedValue
     private long id;
+    private Certainty certainty;
 
     @ManyToOne
     private User user;
@@ -20,13 +23,15 @@ public class EventPresence {
     @ManyToOne
     private GameEvent event;
 
-    public EventPresence(long id, User user, GameEvent event) {
+    public EventPresence(long id, Certainty certainty, User user, GameEvent event) {
         this.id = id;
+        this.certainty = certainty;
         this.user = user;
         this.event = event;
     }
 
-    public EventPresence(User user, GameEvent event) {
+    public EventPresence(Certainty certainty, User user, GameEvent event) {
+        this.certainty = certainty;
         this.user = user;
         this.event = event;
     }
@@ -37,6 +42,10 @@ public class EventPresence {
 
     public long getId() {
         return id;
+    }
+
+    public Certainty getCertainty() {
+        return certainty;
     }
 
     public User getUser() {

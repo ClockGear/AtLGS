@@ -1,5 +1,7 @@
 package domain;
 
+import enums.Certainty;
+
 import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,6 +20,7 @@ public class Presence {
     private long id;
     private Date startTime;
     private Date endTime;
+    private Certainty certainty;
 
     @ManyToOne
     private User user;
@@ -30,16 +33,17 @@ public class Presence {
 
     private static final SimpleDateFormat SDF = new SimpleDateFormat("hh:mm");
 
-    public Presence(long id, Date startTime, Date endTime, User user, LGS lgs, Format format) {
+    public Presence(long id, Date startTime, Date endTime, Certainty certainty, User user, LGS lgs, Format format) {
         this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.certainty = certainty;
         this.user = user;
         this.lgs = lgs;
         this.format = format;
     }
 
-    public Presence(long id, String startTimeString, String endTimeString, User user, LGS lgs, Format format) {
+    public Presence(long id, String startTimeString, String endTimeString, Certainty certainty, User user, LGS lgs, Format format) {
         this.id = id;
         try {
             this.startTime = SDF.parse(startTimeString);
@@ -47,26 +51,29 @@ public class Presence {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        this.certainty = certainty;
         this.user = user;
         this.lgs = lgs;
         this.format = format;
     }
 
-    public Presence(Date startTime, Date endTime, User user, LGS lgs, Format format) {
+    public Presence(Date startTime, Date endTime, Certainty certainty, User user, LGS lgs, Format format) {
         this.startTime = startTime;
         this.endTime = endTime;
+        this.certainty = certainty;
         this.user = user;
         this.lgs = lgs;
         this.format = format;
     }
 
-    public Presence(String startTimeString, String endTimeString, User user, LGS lgs, Format format) {
+    public Presence(String startTimeString, String endTimeString, Certainty certainty, User user, LGS lgs, Format format) {
         try {
             this.startTime = SDF.parse(startTimeString);
             this.endTime = SDF.parse(endTimeString);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        this.certainty = certainty;
         this.user = user;
         this.lgs = lgs;
         this.format = format;
@@ -94,6 +101,10 @@ public class Presence {
 
     public String getEndTimeString() {
         return SDF.format(endTime);
+    }
+
+    public Certainty getCertainty() {
+        return certainty;
     }
 
     public User getUser() {

@@ -26,6 +26,9 @@ public class User {
     private Date tokenExpiration;
     private byte[] salt;
 
+    @ManyToOne
+    private LGS ownedLGS;
+
     public User(long id, String name, String username, String password, String email, Role role, byte[] salt) {
         this.id = id;
         this.firstName = name;
@@ -36,6 +39,17 @@ public class User {
         this.salt = salt;
     }
 
+    public User(long id, String name, String username, String password, String email, Role role, byte[] salt, LGS ownedLGS) {
+        this.id = id;
+        this.firstName = name;
+        this.lastName = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.salt = salt;
+        this.ownedLGS = ownedLGS;
+    }
+
     public User(String name, String username, String password, String email, Role role, byte[] salt) {
         this.firstName = name;
         this.lastName = username;
@@ -43,6 +57,16 @@ public class User {
         this.email = email;
         this.role = role;
         this.salt = salt;
+    }
+
+    public User(String name, String username, String password, String email, Role role, byte[] salt, LGS ownedLGS) {
+        this.firstName = name;
+        this.lastName = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.salt = salt;
+        this.ownedLGS = ownedLGS;
     }
 
     public User() {
@@ -92,5 +116,13 @@ public class User {
 
     public byte[] getSalt() {
         return salt;
+    }
+
+    public LGS getOwnedLGS() {
+        return ownedLGS;
+    }
+
+    public void setOwnedLGS(LGS ownedLGS) {
+        this.ownedLGS = ownedLGS;
     }
 }

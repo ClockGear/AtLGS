@@ -3,15 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <!-- TODO Decide View Type (AppCompat) -->
-    <View
+    <android.support.v4.view.ViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/fragmentSelectionBar"
-        android:layout_alignParentStart="true"
-        android:background="@color/primaryColor"/>
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:id="@+id/fragmentSelectionBar"
@@ -26,7 +22,7 @@
             android:tag="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="30"
+            android:layout_weight="20"
             android:background="@color/primaryColor"
             android:onClick="menuItemClick">
 
@@ -36,7 +32,7 @@
                 android:layout_centerInParent="true"
                 android:textAlignment="center"
                 android:padding="5dp"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="@color/white"
                 android:text="@string/presence"/>
 
@@ -47,7 +43,7 @@
             android:tag="2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="30"
+            android:layout_weight="20"
             android:background="@color/primaryDarkColor"
             android:onClick="menuItemClick">
 
@@ -57,9 +53,30 @@
                 android:layout_centerInParent="true"
                 android:textAlignment="center"
                 android:padding="5dp"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="@color/white"
                 android:text="@string/events"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fragmentButton3"
+            android:tag="3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="20"
+            android:background="@color/primaryDarkColor"
+            android:onClick="menuItemClick">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:text="@string/users"/>
 
         </RelativeLayout>
 

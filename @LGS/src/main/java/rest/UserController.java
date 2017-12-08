@@ -100,7 +100,7 @@ public class UserController {
     @PUT
     @Secured({Role.ADMIN})
     @Produces(MediaType.APPLICATION_JSON)
-    public Response editRole(@FormParam("id") long id, @FormParam("role") String role) {
+    public Response editRole(@FormParam("id") long id, @FormParam("role") String role, @FormParam("lgsId") long lgsId ) {
         User user = userService.find(id);
         if (user != null) {
             user.setRole(Role.valueOf(role));

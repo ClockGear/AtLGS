@@ -7,12 +7,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="50dp">
+        android:padding="40dp">
 
-        <TextView
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
+            android:src="@drawable/lgs_wide_icon"
             android:textAlignment="center"
             android:textSize="72sp" />
 
@@ -20,7 +20,7 @@
             android:id="@+id/etLoginEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="25dp"
             android:hint="@string/email"
             android:inputType="textEmailAddress" />
 

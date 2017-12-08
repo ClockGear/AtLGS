@@ -47,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.err_req_password,Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (password.length() < 8) {
+            if (password.length() < 6) {
                 Toast.makeText(this, R.string.err_min_8_char,Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -154,6 +154,8 @@ public class RegisterActivity extends AppCompatActivity {
                         editor.putString(getString(R.string.login_token), token);
                         editor.apply();
                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     } else {
                         createNewErrorDialog(R.string.err_something_wrong);
@@ -230,12 +232,12 @@ public class RegisterActivity extends AppCompatActivity {
     //endregion
 
     //region Password Constraints
-    private static final Pattern[] passwordRegexes = new Pattern[4];{
+    private static final Pattern[] passwordRegexes = new Pattern[3];{
         passwordRegexes[0] = Pattern.compile(".*[A-Z].*");
         passwordRegexes[1] = Pattern.compile(".*[a-z].*");
         passwordRegexes[2] = Pattern.compile(".*\\d.*");
-        passwordRegexes[3] = Pattern.compile(".*[~!].*");
     }
+
     public boolean isLegalPassword(String password) {
         for (Pattern passwordRegex : passwordRegexes) {
             if (!passwordRegex.matcher(password).matches())
