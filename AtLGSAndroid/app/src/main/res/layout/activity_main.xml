@@ -22,19 +22,15 @@
             android:tag="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="20"
+            android:layout_weight="15"
             android:background="@color/primaryColor"
             android:onClick="menuItemClick">
 
-            <TextView
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textAlignment="center"
-                android:padding="5dp"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:text="@string/presence"/>
+                android:src="@drawable/ic_calendar_white_36dp"/>
 
         </RelativeLayout>
 
@@ -43,19 +39,15 @@
             android:tag="2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="20"
+            android:layout_weight="15"
             android:background="@color/primaryDarkColor"
             android:onClick="menuItemClick">
 
-            <TextView
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textAlignment="center"
-                android:padding="5dp"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:text="@string/events"/>
+                android:src="@drawable/ic_calendar_check_white_36dp"/>
 
         </RelativeLayout>
 
@@ -64,19 +56,34 @@
             android:tag="3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="20"
+            android:layout_weight="15"
             android:background="@color/primaryDarkColor"
             android:onClick="menuItemClick">
 
-            <TextView
+
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textAlignment="center"
-                android:padding="5dp"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:text="@string/users"/>
+                android:src="@drawable/ic_account_white_36dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fragmentButton4"
+            android:tag="4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="15"
+            android:background="@color/primaryDarkColor"
+            android:onClick="menuItemClick">
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_store_white_36dp"/>
 
         </RelativeLayout>
 

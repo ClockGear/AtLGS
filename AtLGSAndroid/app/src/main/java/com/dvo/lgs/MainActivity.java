@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.dvo.lgs.fragments.EventFragment;
 import com.dvo.lgs.fragments.PresenceFragment;
+import com.dvo.lgs.fragments.StoreFragment;
 import com.dvo.lgs.fragments.UserFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,17 +25,20 @@ public class MainActivity extends AppCompatActivity {
     private View fragmentButton1;
     private View fragmentButton2;
     private View fragmentButton3;
+    private View fragmentButton4;
     private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle(0);
         fragmentButton1 = findViewById(R.id.fragmentButton1);
         fragmentButton2 = findViewById(R.id.fragmentButton2);
         fragmentButton3 = findViewById(R.id.fragmentButton3);
+        fragmentButton4 = findViewById(R.id.fragmentButton4);
         pager = findViewById(R.id.pager);
-        adapter= new MainPagerAdapter(this, getSupportFragmentManager());
+        adapter= new MainPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
         sharedPref = getSharedPreferences(getString(R.string.def_pref),Context.MODE_PRIVATE);
         //region ViewPager Listener
@@ -46,22 +50,31 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
+                setTitle(position);
                 switch (position) {
                     case 0:
                         fragmentButton1.setBackgroundColor(getResources().getColor(R.color.primaryColor));
                         fragmentButton2.setBackgroundColor(getResources().getColor(R.color.primaryDarkColor));
                         fragmentButton3.setBackgroundColor(getResources().getColor(R.color.primaryDarkColor));
+                        fragmentButton4.setBackgroundColor(getResources().getColor(R.color.primaryDarkColor));
                         break;
                     case 1:
                         fragmentButton1.setBackgroundColor(getResources().getColor(R.color.primaryDarkColor));
                         fragmentButton2.setBackgroundColor(getResources().getColor(R.color.primaryColor));
                         fragmentButton3.setBackgroundColor(getResources().getColor(R.color.primaryDarkColor));
+                        fragmentButton4.setBackgroundColor(getResources().getColor(R.color.primaryDarkColor));
                         break;
                     case 2:
                         fragmentButton1.setBackgroundColor(getResources().getColor(R.color.primaryDarkColor));
                         fragmentButton2.setBackgroundColor(getResources().getColor(R.color.primaryDarkColor));
                         fragmentButton3.setBackgroundColor(getResources().getColor(R.color.primaryColor));
+                        fragmentButton4.setBackgroundColor(getResources().getColor(R.color.primaryDarkColor));
                         break;
+                    case 3:
+                        fragmentButton1.setBackgroundColor(getResources().getColor(R.color.primaryDarkColor));
+                        fragmentButton2.setBackgroundColor(getResources().getColor(R.color.primaryDarkColor));
+                        fragmentButton3.setBackgroundColor(getResources().getColor(R.color.primaryDarkColor));
+                        fragmentButton4.setBackgroundColor(getResources().getColor(R.color.primaryColor));
                     default:
                         break;
                 }
@@ -114,49 +127,63 @@ public class MainActivity extends AppCompatActivity {
                 pager.setCurrentItem(2);
                 break;
             }
+            case 4: {
+                pager.setCurrentItem(3);
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
+
+    public void setTitle(int position) {
+        switch (position) {
+            case 0: {
+                getSupportActionBar().setTitle(getString(R.string.presence));
+                break;
+            }
+            case 1: {
+                getSupportActionBar().setTitle(getString(R.string.events));
+                break;
+            }
+            case 2: {
+                getSupportActionBar().setTitle(getString(R.string.users));
+                break;
+            }
+            case 3: {
+                getSupportActionBar().setTitle(getString(R.string.lgs));
+                break;
+            }
+            default:{
+                break;
+            }
         }
     }
 
     public static class MainPagerAdapter extends FragmentPagerAdapter {
-        private static int NUM_ITEMS = 3;
-        private Context context;
+        private static int NUM_ITEMS = 4;
 
-        MainPagerAdapter(Context context, FragmentManager fragmentManager) {
+        MainPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
-            this.context = context;
         }
 
-        // Returns total number of pages
         @Override
         public int getCount() {
             return NUM_ITEMS;
         }
 
-        // Returns the fragment to display for that page
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 0: // Fragment # 0 - This will show PresenceFragment
-                    return PresenceFragment.newInstance();
-                case 1: // Fragment # 1 - This will show EventFragment
-                    return EventFragment.newInstance();
-                case 2: // Fragment # 2 - This will show UserFragment
-                    return UserFragment.newInstance();
-                default:
-                    return null;
-            }
-        }
-
-        // Returns the page title for the top indicator
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
                 case 0:
-                    return context.getString(R.string.presence);
+                    return PresenceFragment.newInstance();
                 case 1:
-                    return context.getString(R.string.events);
+                    return EventFragment.newInstance();
                 case 2:
-                    return context.getString(R.string.users);
+                    return UserFragment.newInstance();
+                case 3:
+                    return StoreFragment.newInstance();
                 default:
                     return null;
             }
