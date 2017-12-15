@@ -7,6 +7,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"
         android:layout_width="match_parent"
+        android:layout_above="@id/fragmentSelectionBar"
         android:layout_height="match_parent" />
 
     <LinearLayout
@@ -29,8 +30,18 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ic_calendar_white_36dp"/>
+                android:padding="5dp"
+                android:src="@drawable/ic_calendar_check_white_36dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:text="@string/presence"/>
 
         </RelativeLayout>
 
@@ -46,8 +57,18 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ic_calendar_check_white_36dp"/>
+                android:padding="5dp"
+                android:src="@drawable/ic_calendar_white_36dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:text="@string/events"/>
 
         </RelativeLayout>
 
@@ -60,12 +81,21 @@
             android:background="@color/primaryDarkColor"
             android:onClick="menuItemClick">
 
-
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:padding="5dp"
                 android:src="@drawable/ic_account_white_36dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:text="@string/users"/>
 
         </RelativeLayout>
 
@@ -78,12 +108,21 @@
             android:background="@color/primaryDarkColor"
             android:onClick="menuItemClick">
 
-
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:padding="5dp"
                 android:src="@drawable/ic_store_white_36dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:text="@string/lgs"/>
 
         </RelativeLayout>
 

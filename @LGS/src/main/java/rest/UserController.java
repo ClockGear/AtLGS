@@ -1,7 +1,9 @@
 package rest;
 
+import domain.LGS;
 import domain.User;
 import enums.Role;
+import service.LGSService;
 import service.UserService;
 
 import javax.inject.Inject;
@@ -18,6 +20,7 @@ import java.security.Principal;
 import java.security.SecureRandom;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Dennis van Opstal on 23-11-2017.
@@ -26,6 +29,8 @@ import java.util.Date;
 public class UserController {
     @Inject
     private UserService userService;
+    @Inject
+    private LGSService lgsService;
     private JsonResponseObject json;
 
     @Path("")
@@ -92,7 +97,8 @@ public class UserController {
     public Response validateToken(@Context SecurityContext securityContext) {
         Principal principal = securityContext.getUserPrincipal();
         String email = principal.getName();
-        json = new JsonResponseObject(false,(Object)email);
+        User user = userService.find(email);
+        json = new JsonResponseObject(false, user);
         return Response.status(Response.Status.OK).entity(json).build();
     }
 
@@ -103,9 +109,19 @@ public class UserController {
     public Response editRole(@FormParam("id") long id, @FormParam("role") String role, @FormParam("lgsId") long lgsId ) {
         User user = userService.find(id);
         if (user != null) {
+            String extraMessage = "";
             user.setRole(Role.valueOf(role));
+            if (lgsId > 0 && role.equals(Role.LGS.getRole())) {
+                LGS lgs = lgsService.find(lgsId);
+                if (lgs != null) {
+                    user.setOwnedLGS(lgs);
+                    extraMessage = " Also successfully set LGS!";
+                } else {
+                    extraMessage = " But couldn't set LGS!";
+                }
+            }
             userService.edit(user);
-            json = new JsonResponseObject(false, "Successfully changed role!");
+            json = new JsonResponseObject(false, "Successfully changed role!" + extraMessage);
             return Response.status(Response.Status.OK).entity(json).build();
         } else {
             json = new JsonResponseObject(true,"User with the given id doesn't exist.");
@@ -117,11 +133,38 @@ public class UserController {
     @GET
     @Secured({Role.NORMAL_USER,Role.LGS,Role.ADMIN})
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUser(@Context SecurityContext securityContext, @QueryParam("id") long id) {
+    public Response getUsers(@QueryParam("id") long id) {
+        if (id > 0) {
+            User user = userService.find(id);
+            if (user != null) {
+                json = new JsonResponseObject(false, user);
+                return Response.status(Response.Status.OK).entity(json).build();
+            } else {
+                json = new JsonResponseObject(true, "User with the given id doesn't exist.");
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
+            }
+        } else {
+            List<User> users = userService.getAll();
+            json = new JsonResponseObject(false, users);
+            return Response.status(Response.Status.OK).entity(json).build();
+        }
+    }
+
+    @Path("")
+    @DELETE
+    @Secured({Role.ADMIN})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeUser(@QueryParam("id") long id) {
         User user = userService.find(id);
         if (user != null) {
-            json = new JsonResponseObject(false,user);
-            return Response.status(Response.Status.OK).entity(json).build();
+            userService.remove(id);
+            if (userService.find(id) == null) {
+                json = new JsonResponseObject(false, "Successfully deleted the user!");
+                return Response.status(Response.Status.OK).entity(json).build();
+            } else {
+                json = new JsonResponseObject(true, "Something went wrong while deleting the user.");
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
+            }
         } else {
             json = new JsonResponseObject(true,"User with the given id doesn't exist.");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();

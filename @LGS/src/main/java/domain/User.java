@@ -1,5 +1,6 @@
 package domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import enums.Role;
 
 import javax.persistence.*;
@@ -85,6 +86,7 @@ public class User {
         return lastName;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -101,10 +103,12 @@ public class User {
         this.role = role;
     }
 
+    @JsonIgnore
     public String getToken() {
         return token;
     }
 
+    @JsonIgnore
     public Date getTokenExpiration() {
         return tokenExpiration;
     }
@@ -114,6 +118,7 @@ public class User {
         this.tokenExpiration = tokenExpiration;
     }
 
+    @JsonIgnore
     public byte[] getSalt() {
         return salt;
     }

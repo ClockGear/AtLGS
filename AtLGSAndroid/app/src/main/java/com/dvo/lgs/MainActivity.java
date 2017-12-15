@@ -15,7 +15,7 @@ import android.view.View;
 
 import com.dvo.lgs.fragments.EventFragment;
 import com.dvo.lgs.fragments.PresenceFragment;
-import com.dvo.lgs.fragments.StoreFragment;
+import com.dvo.lgs.fragments.LGSFragment;
 import com.dvo.lgs.fragments.UserFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                 case 2:
                     return UserFragment.newInstance();
                 case 3:
-                    return StoreFragment.newInstance();
+                    return LGSFragment.newInstance();
                 default:
                     return null;
             }

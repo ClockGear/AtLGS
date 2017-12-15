@@ -35,5 +35,5 @@
     <string name="page_nr" translatable="false">pageNr</string>
     <string name="page_title" translatable="false">pageTitle</string>
     <string name="sign_out">Sign out</string>
-    <string name="lgs">LGS</string>
+    <string name="lgs">LGSs</string>
 </resources>
