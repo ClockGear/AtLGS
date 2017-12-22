@@ -31,7 +31,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/ic_calendar_check_white_36dp"/>
+                android:src="@drawable/ic_calendar_check_white_36dp"
+                android:contentDescription="@string/cd_ic_presence"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -58,7 +59,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/ic_calendar_white_36dp"/>
+                android:src="@drawable/ic_calendar_white_36dp"
+                android:contentDescription="@string/cd_ic_events"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -85,7 +87,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/ic_account_white_36dp"/>
+                android:src="@drawable/ic_account_white_36dp"
+                android:contentDescription="@string/cd_ic_users"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -112,7 +115,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/ic_store_white_36dp"/>
+                android:src="@drawable/ic_store_white_36dp"
+                android:contentDescription="@string/cd_ic_lgs"/>
 
             <TextView
                 android:layout_width="match_parent"

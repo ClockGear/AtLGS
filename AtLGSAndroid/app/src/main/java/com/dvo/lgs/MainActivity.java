@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.dvo.lgs.fragments.EventFragment;
 import com.dvo.lgs.fragments.PresenceFragment;
@@ -97,6 +98,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.settings: {
+                //TODO GO TO SETTINGS ACTIVITY
+                Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
+                return true;
+            }
             case R.id.logout: {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.remove(getString(R.string.login_token));
@@ -138,25 +144,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setTitle(int position) {
-        switch (position) {
-            case 0: {
-                getSupportActionBar().setTitle(getString(R.string.presence));
-                break;
-            }
-            case 1: {
-                getSupportActionBar().setTitle(getString(R.string.events));
-                break;
-            }
-            case 2: {
-                getSupportActionBar().setTitle(getString(R.string.users));
-                break;
-            }
-            case 3: {
-                getSupportActionBar().setTitle(getString(R.string.lgss));
-                break;
-            }
-            default:{
-                break;
+        if (getSupportActionBar() != null) {
+            switch (position) {
+                case 0: {
+                    getSupportActionBar().setTitle(getString(R.string.presence));
+                    break;
+                }
+                case 1: {
+                    getSupportActionBar().setTitle(getString(R.string.events));
+                    break;
+                }
+                case 2: {
+                    getSupportActionBar().setTitle(getString(R.string.users));
+                    break;
+                }
+                case 3: {
+                    getSupportActionBar().setTitle(getString(R.string.lgss));
+                    break;
+                }
+                default: {
+                    break;
+                }
             }
         }
     }

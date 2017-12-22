@@ -2,6 +2,8 @@ package rest;
 
 import domain.LGS;
 import domain.User;
+import enums.EmailDisplayOption;
+import enums.NameDisplayOption;
 import enums.Role;
 import service.LGSService;
 import service.UserService;
@@ -99,6 +101,22 @@ public class UserController {
         String email = principal.getName();
         User user = userService.find(email);
         json = new JsonResponseObject(false, user);
+        return Response.status(Response.Status.OK).entity(json).build();
+    }
+
+    @Path("/settings")
+    @PUT
+    @Secured({Role.NORMAL_USER, Role.LGS, Role.ADMIN})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response editUserSettings(@Context SecurityContext securityContext, @FormParam("nameDisplayOption") String nameDisplayOption,
+                                     @FormParam("emailDisplayOption") String emailDisplayOption) {
+        Principal principal = securityContext.getUserPrincipal();
+        String email = principal.getName();
+        User user = userService.find(email);
+        user.setNameDisplayOption(NameDisplayOption.valueOf(nameDisplayOption));
+        user.setEmailDisplayOption(EmailDisplayOption.valueOf(emailDisplayOption));
+        userService.edit(user);
+        json = new JsonResponseObject(false, "Successfully changed settings!");
         return Response.status(Response.Status.OK).entity(json).build();
     }
 

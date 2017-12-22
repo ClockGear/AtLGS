@@ -22,7 +22,7 @@ public class BetterStringRequest extends Request<String> {
     }
 
     @Override
-    protected Response parseNetworkResponse(NetworkResponse response) {
+    protected Response<String> parseNetworkResponse(NetworkResponse response) {
         try {
             String json = new String(
                     response.data,

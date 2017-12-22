@@ -28,10 +28,12 @@
     <string name="err_invalid_email">Email is niet valide.</string>
     <string name="presence">Aanwezigheid</string>
     <string name="events">Evenementen</string>
+    <string name="user">Gebruiker</string>
     <string name="users">Gebruikers</string>
     <string name="sign_out">Log uit</string>
     <string name="lgss">LGSs</string>
     <string name="name">Naam</string>
+    <string name="lgs">LGS</string>
     <string name="add_lgs">LGS Toevoegen</string>
     <string name="street">Straat</string>
     <string name="city">Stad</string>
@@ -42,4 +44,10 @@
     <string name="deletingBack2">" wil verwijderen\?</string>
     <string name="yes">Ja</string>
     <string name="no">Nee</string>
+    <string name="app_logo">App Logo</string>
+    <string name="cd_ic_presence">Icoontje voor Aanwezigheid</string>
+    <string name="cd_ic_events">Icoontje voor Evenementen</string>
+    <string name="cd_ic_users">Icoontje voor Gebruikers</string>
+    <string name="cd_ic_lgs">Icoontje voor LGS</string>
+    <string name="settings">Instellingen</string>
 </resources>

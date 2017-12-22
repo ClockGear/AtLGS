@@ -1,6 +1,8 @@
 package domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import enums.EmailDisplayOption;
+import enums.NameDisplayOption;
 import enums.Role;
 
 import javax.persistence.*;
@@ -26,19 +28,11 @@ public class User {
     private String token;
     private Date tokenExpiration;
     private byte[] salt;
+    private NameDisplayOption nameDisplayOption;
+    private EmailDisplayOption emailDisplayOption;
 
     @ManyToOne
     private LGS ownedLGS;
-
-    public User(long id, String name, String username, String password, String email, Role role, byte[] salt) {
-        this.id = id;
-        this.firstName = name;
-        this.lastName = username;
-        this.password = password;
-        this.email = email;
-        this.role = role;
-        this.salt = salt;
-    }
 
     public User(long id, String name, String username, String password, String email, Role role, byte[] salt, LGS ownedLGS) {
         this.id = id;
@@ -48,26 +42,21 @@ public class User {
         this.email = email;
         this.role = role;
         this.salt = salt;
+        this.nameDisplayOption = NameDisplayOption.ANONYMOUS;
+        this.emailDisplayOption = EmailDisplayOption.INVISIBLE;
         this.ownedLGS = ownedLGS;
     }
 
-    public User(String name, String username, String password, String email, Role role, byte[] salt) {
-        this.firstName = name;
-        this.lastName = username;
-        this.password = password;
-        this.email = email;
-        this.role = role;
-        this.salt = salt;
+    public User(long id, String name, String username, String password, String email, Role role, byte[] salt) {
+        this(id,name,username,password,email,role,salt,null);
     }
 
     public User(String name, String username, String password, String email, Role role, byte[] salt, LGS ownedLGS) {
-        this.firstName = name;
-        this.lastName = username;
-        this.password = password;
-        this.email = email;
-        this.role = role;
-        this.salt = salt;
-        this.ownedLGS = ownedLGS;
+        this(0,name,username,password,email,role,salt,ownedLGS);
+    }
+
+    public User(String name, String username, String password, String email, Role role, byte[] salt) {
+        this(0,name,username,password,email,role,salt,null);
     }
 
     public User() {
@@ -121,6 +110,22 @@ public class User {
     @JsonIgnore
     public byte[] getSalt() {
         return salt;
+    }
+
+    public EmailDisplayOption getEmailDisplayOption() {
+        return emailDisplayOption;
+    }
+
+    public void setEmailDisplayOption(EmailDisplayOption emailDisplayOption) {
+        this.emailDisplayOption = emailDisplayOption;
+    }
+
+    public NameDisplayOption getNameDisplayOption() {
+        return nameDisplayOption;
+    }
+
+    public void setNameDisplayOption(NameDisplayOption nameDisplayOption) {
+        this.nameDisplayOption = nameDisplayOption;
     }
 
     public LGS getOwnedLGS() {

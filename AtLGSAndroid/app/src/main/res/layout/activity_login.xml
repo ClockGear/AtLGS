@@ -14,7 +14,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/lgs_wide_icon"
             android:textAlignment="center"
-            android:textSize="72sp" />
+            android:textSize="72sp"
+            android:contentDescription="@string/app_logo"/>
 
         <EditText
             android:id="@+id/etLoginEmail"
