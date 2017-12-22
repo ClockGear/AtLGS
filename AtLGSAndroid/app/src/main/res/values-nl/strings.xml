@@ -31,4 +31,8 @@
     <string name="users">Gebruikers</string>
     <string name="sign_out">Log uit</string>
     <string name="lgs">LGSs</string>
+    <string name="name">Naam</string>
+    <string name="add_lgs">LGS Toevoegen</string>
+    <string name="street">Straat</string>
+    <string name="city">Stad</string>
 </resources>

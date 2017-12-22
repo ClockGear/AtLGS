@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -46,7 +51,8 @@ public class LGSFragment extends Fragment {
     private FloatingActionButton fabAddLGS;
     private LGSAdapter adapter;
     private List<LGS> lgsList;
-
+    private AlertDialog alertDialog;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private static final String VOLLEY_TAG = "VOLLEY - LGS";
     private SharedPreferences sharedPref;
     private String token;
@@ -70,10 +76,34 @@ public class LGSFragment extends Fragment {
         fabAddLGS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO Show View for user to create LGS
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.dialog_add_lgs, null);
+                builder.setView(dialogView);
+                final EditText etNameLGS = dialogView.findViewById(R.id.etNameLGS);
+                final EditText etStreetLGS = dialogView.findViewById(R.id.etStreetLGS);
+                final EditText etCityLGS = dialogView.findViewById(R.id.etCityLGS);
+                Button confirmButton = dialogView.findViewById(R.id.btnAddLGS);
+                confirmButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String lgsName = String.valueOf(etNameLGS.getText());
+                        String lgsAddress = String.valueOf(etStreetLGS.getText() + ", " + etCityLGS.getText());
+                        addLGS(lgsName,lgsAddress);
+                        alertDialog.dismiss();
+                    }
+                });
+                alertDialog = builder.show();
             }
         });
         recyclerView = getActivity().findViewById(R.id.rvLGS);
+        swipeRefreshLayout = getActivity().findViewById(R.id.srlLGS);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getAllLGSs();
+            }
+        });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -94,11 +124,13 @@ public class LGSFragment extends Fragment {
                 try {
                     JSONObject json = new JSONObject(response);
                     JSONArray lgsJsonArray = json.getJSONArray("object");
+                    lgsList.clear();
                     for (int i = 0; i < lgsJsonArray.length(); i++) {
                         JSONObject lgsJsonObject = (JSONObject) lgsJsonArray.get(i);
                         LGS lgs = new Gson().fromJson(lgsJsonObject.toString(),LGS.class);
                         lgsList.add(lgs);
                     }
+                    swipeRefreshLayout.setRefreshing(false);
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -188,6 +220,56 @@ public class LGSFragment extends Fragment {
                 Map<String,String> headers = new HashMap<>();
                 headers.put("Authorization","Bearer " + token);
                 return headers;
+            }
+        };
+        AppController.getInstance().addToRequestQueue(validationRequest, requestTag);
+    }
+
+    private void addLGS(final String name, final String address) {
+        String requestTag = "add_lgs_request";
+        String url = getString(R.string.api_url) + "/lgs";
+        BetterStringRequest validationRequest = new BetterStringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(VOLLEY_TAG, response);
+                getAllLGSs();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String jsonString = error.getMessage();
+                if (jsonString == null || jsonString.isEmpty()) {
+                    createNewErrorDialog(R.string.err_something_wrong);
+                } else {
+                    Log.e(VOLLEY_TAG, jsonString);
+                    try {
+                        JSONObject json = new JSONObject(jsonString);
+                        String message = json.getString("message");
+                        switch (message) {
+                            default:
+                                createNewErrorDialog(R.string.err_something_wrong);
+                                break;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        createNewErrorDialog(R.string.err_something_wrong);
+                    }
+                }
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put("Authorization","Bearer " + token);
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("name",name);
+                params.put("address",address);
+                return params;
             }
         };
         AppController.getInstance().addToRequestQueue(validationRequest, requestTag);

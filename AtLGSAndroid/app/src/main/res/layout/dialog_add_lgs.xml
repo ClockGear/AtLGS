@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etNameLGS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/name"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/etStreetLGS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etNameLGS"
+        android:hint="@string/street"
+        android:inputType="textPostalAddress"/>
+
+    <EditText
+        android:id="@+id/etCityLGS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etStreetLGS"
+        android:hint="@string/city"
+        android:inputType="textPostalAddress"/>
+
+    <Button
+        android:id="@+id/btnAddLGS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etCityLGS"
+        android:text="@string/add_lgs"/>
+
+</RelativeLayout>
