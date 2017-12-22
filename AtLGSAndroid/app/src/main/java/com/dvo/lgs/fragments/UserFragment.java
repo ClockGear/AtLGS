@@ -86,8 +86,8 @@ public class UserFragment extends Fragment {
                 }
             }
         });
-        recyclerView = getActivity().findViewById(R.id.rvLGS);
-        swipeRefreshLayout = getActivity().findViewById(R.id.srlLGS);
+        recyclerView = getActivity().findViewById(R.id.rvUsers);
+        swipeRefreshLayout = getActivity().findViewById(R.id.srlUsers);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

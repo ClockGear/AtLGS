@@ -6,7 +6,6 @@
     <string name="no_account_yet">Don\'t have an account yet? Click Here!</string>
     <string name="forgot_password">Forgot your Password?</string>
     <string name="err_not_implemented">Not Implemented Yet.</string>
-    <string name="api_url" translatable="false">http://145.93.122.40:8085/atlgs/api</string>
     <string name="error">Error</string>
     <string name="err_something_wrong">Something went wrong.</string>
     <string name="err_password_wrong">The given password was incorrect.</string>
