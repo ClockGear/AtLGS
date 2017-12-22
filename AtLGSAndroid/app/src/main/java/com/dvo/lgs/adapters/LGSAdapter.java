@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.dvo.lgs.R;
 import com.dvo.lgs.domain.LGS;
+import com.dvo.lgs.util.OnItemLongClickListener;
 
 import java.util.List;
 
@@ -18,25 +19,35 @@ import java.util.List;
 public class LGSAdapter extends RecyclerView.Adapter<LGSAdapter.ViewHolder> {
 
     private List<LGS> lgsList;
+    private OnItemLongClickListener listener;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, address;
-
         ViewHolder(View view) {
             super(view);
             name = view.findViewById(R.id.tvLGSName);
             address = view.findViewById(R.id.tvLGSAddress);
         }
+
+        void bind(final int position, final OnItemLongClickListener listener) {
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    listener.onItemLongClick(position);
+                    return false;
+                }
+            });
+        }
     }
 
-    public LGSAdapter(List<LGS> lgsList) {
+    public LGSAdapter(List<LGS> lgsList, OnItemLongClickListener listener) {
         this.lgsList = lgsList;
+        this.listener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.listitem_lgs, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_lgs, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -45,7 +56,11 @@ public class LGSAdapter extends RecyclerView.Adapter<LGSAdapter.ViewHolder> {
         LGS lgs = lgsList.get(position);
         holder.name.setText(lgs.getName());
         holder.address.setText(lgs.getAddress());
+        holder.bind(position, listener);
     }
+
+
+
 
     @Override
     public int getItemCount() {

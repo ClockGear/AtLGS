@@ -1,8 +1,10 @@
 package com.dvo.lgs.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -17,8 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -28,6 +28,7 @@ import com.dvo.lgs.R;
 import com.dvo.lgs.adapters.LGSAdapter;
 import com.dvo.lgs.domain.LGS;
 import com.dvo.lgs.enums.Role;
+import com.dvo.lgs.util.OnItemLongClickListener;
 import com.dvo.lgs.volley.AppController;
 import com.dvo.lgs.volley.BetterStringRequest;
 import com.google.gson.Gson;
@@ -56,6 +57,7 @@ public class LGSFragment extends Fragment {
     private static final String VOLLEY_TAG = "VOLLEY - LGS";
     private SharedPreferences sharedPref;
     private String token;
+    private boolean isAdmin;
 
     public static LGSFragment newInstance() {
         LGSFragment lgsFragment = new LGSFragment();
@@ -70,8 +72,37 @@ public class LGSFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        isAdmin = false;
         lgsList = new ArrayList<>();
-        adapter = new LGSAdapter(lgsList);
+        adapter = new LGSAdapter(lgsList, new OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(int position) {
+                if (isAdmin) {
+                    final LGS lgs = lgsList.get(position);
+                    Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+                    if (vibrator != null) {
+                        vibrator.vibrate(50);
+                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle(getString(R.string.deletingFront) + getString(R.string.lgs) + getString(R.string.deletingBack));
+                    builder.setMessage(getString(R.string.deletingFront2) + lgs.getName() + getString(R.string.deletingBack2));
+                    builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            deleteLGS(lgs.getId());
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    builder.show();
+                }
+            }
+        });
         fabAddLGS = getActivity().findViewById(R.id.fabAddLGS);
         fabAddLGS.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,6 +216,7 @@ public class LGSFragment extends Fragment {
                             @Override
                             public void run() {
                                 fabAddLGS.setVisibility(View.VISIBLE);
+                                isAdmin = true;
                             }
                         });
                     }
@@ -270,6 +302,54 @@ public class LGSFragment extends Fragment {
                 params.put("name",name);
                 params.put("address",address);
                 return params;
+            }
+        };
+        AppController.getInstance().addToRequestQueue(validationRequest, requestTag);
+    }
+
+    private void deleteLGS(long id) {
+        String requestTag = "delete_lgs_request";
+        String url = getString(R.string.api_url) + "/lgs?id=" + id;
+        BetterStringRequest validationRequest = new BetterStringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(VOLLEY_TAG, response);
+                getAllLGSs();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String jsonString = error.getMessage();
+                if (jsonString == null || jsonString.isEmpty()) {
+                    createNewErrorDialog(R.string.err_something_wrong);
+                } else {
+                    Log.e(VOLLEY_TAG, jsonString);
+                    try {
+                        JSONObject json = new JSONObject(jsonString);
+                        String message = json.getString("message");
+                        switch (message) {
+                            case "Something went wrong while deleting the LGS.":
+                                createNewErrorDialog(R.string.err_something_wrong);
+                                break;
+                            case "LGS with the given id doesn't exist.":
+                                createNewErrorDialog(R.string.err_lgs_id_exist);
+                                break;
+                            default:
+                                createNewErrorDialog(R.string.err_something_wrong);
+                                break;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        createNewErrorDialog(R.string.err_something_wrong);
+                    }
+                }
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put("Authorization","Bearer " + token);
+                return headers;
             }
         };
         AppController.getInstance().addToRequestQueue(validationRequest, requestTag);

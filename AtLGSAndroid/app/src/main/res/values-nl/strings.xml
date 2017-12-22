@@ -30,9 +30,16 @@
     <string name="events">Evenementen</string>
     <string name="users">Gebruikers</string>
     <string name="sign_out">Log uit</string>
-    <string name="lgs">LGSs</string>
+    <string name="lgss">LGSs</string>
     <string name="name">Naam</string>
     <string name="add_lgs">LGS Toevoegen</string>
     <string name="street">Straat</string>
     <string name="city">Stad</string>
+    <string name="err_lgs_id_exist">LGS met het gegeven id bestaat niet.</string>
+    <string name="deletingFront"/>
+    <string name="deletingBack" >" Verwijderen"</string>>
+    <string name="deletingFront2">"Weet je zeker dat je "</string>
+    <string name="deletingBack2">" wil verwijderen\?</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nee</string>
 </resources>

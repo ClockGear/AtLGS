@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case 3: {
-                getSupportActionBar().setTitle(getString(R.string.lgs));
+                getSupportActionBar().setTitle(getString(R.string.lgss));
                 break;
             }
             default:{

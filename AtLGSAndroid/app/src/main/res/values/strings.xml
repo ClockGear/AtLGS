@@ -35,9 +35,17 @@
     <string name="page_nr" translatable="false">pageNr</string>
     <string name="page_title" translatable="false">pageTitle</string>
     <string name="sign_out">Sign out</string>
-    <string name="lgs">LGSs</string>
+    <string name="lgss">LGSs</string>
+    <string name="lgs">LGS</string>
     <string name="name">Name</string>
     <string name="add_lgs">Add LGS</string>
     <string name="street">Street</string>
     <string name="city">City</string>
+    <string name="err_lgs_id_exist">LGS with the given id doesn\'t exist.</string>
+    <string name="deletingFront">Deleting</string>
+    <string name="deletingBack" />
+    <string name="deletingFront2">"Are you sure you want to delete "</string>
+    <string name="deletingBack2">\?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

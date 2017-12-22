@@ -122,7 +122,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="12sp"
-                android:text="@string/lgs"/>
+                android:text="@string/lgss"/>
 
         </RelativeLayout>
 
