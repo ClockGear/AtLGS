@@ -50,4 +50,5 @@
     <string name="cd_ic_users">Icoontje voor Gebruikers</string>
     <string name="cd_ic_lgs">Icoontje voor LGS</string>
     <string name="settings">Instellingen</string>
+    <string name="err_user_id_exist">Gebruiker met het gegeven id bestaat niet.</string>
 </resources>
