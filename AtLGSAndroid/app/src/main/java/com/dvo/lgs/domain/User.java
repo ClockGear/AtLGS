@@ -16,8 +16,9 @@ public class User {
     private Role role;
     private NameDisplayOption nameDisplayOption;
     private EmailDisplayOption emailDisplayOption;
+    private LGS ownedLGS;
 
-    public User(long id, String firstName, String lastName, String email, Role role, NameDisplayOption nameDisplayOption, EmailDisplayOption emailDisplayOption) {
+    public User(long id, String firstName, String lastName, String email, Role role, NameDisplayOption nameDisplayOption, EmailDisplayOption emailDisplayOption, LGS ownedLGS) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,10 +26,11 @@ public class User {
         this.role = role;
         this.nameDisplayOption = nameDisplayOption;
         this.emailDisplayOption = emailDisplayOption;
+        this.ownedLGS = ownedLGS;
     }
 
-    public User(String firstName, String lastName, String email, Role role, NameDisplayOption nameDisplayOption, EmailDisplayOption emailDisplayOption) {
-        this(0,firstName,lastName,email,role,nameDisplayOption,emailDisplayOption);
+    public User(String firstName, String lastName, String email, Role role, NameDisplayOption nameDisplayOption, EmailDisplayOption emailDisplayOption, LGS ownedLGS) {
+        this(0,firstName,lastName,email,role,nameDisplayOption,emailDisplayOption, ownedLGS);
     }
 
     public long getId() {
@@ -84,5 +86,9 @@ public class User {
             default:
                 return "????????";
         }
+    }
+
+    public LGS getOwnedLGS() {
+        return ownedLGS;
     }
 }

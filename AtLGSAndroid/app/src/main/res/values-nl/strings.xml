@@ -38,7 +38,7 @@
     <string name="street">Straat</string>
     <string name="city">Stad</string>
     <string name="err_lgs_id_exist">LGS met het gegeven id bestaat niet.</string>
-    <string name="deletingFront"/>
+    <string name="deletingFront" />
     <string name="deletingBack" >" Verwijderen"</string>>
     <string name="deletingFront2">"Weet je zeker dat je "</string>
     <string name="deletingBack2">" wil verwijderen\?</string>
@@ -51,4 +51,12 @@
     <string name="cd_ic_lgs">Icoontje voor LGS</string>
     <string name="settings">Instellingen</string>
     <string name="err_user_id_exist">Gebruiker met het gegeven id bestaat niet.</string>
+    <string name="user_action">"Wat wil je doen met deze "</string>
+    <string name="delete">Verwijderen</string>
+    <string name="user_lowercase">gebruiker</string>
+    <string name="assign_lgs">LGS Toekennen</string>
+    <string name="err_couldnt_assign">Kon geen LGS toekennen</string>
+    <string name="msg_owns_lgs">Deze gebruiker bezit al een LGS</string>
+    <string name="cancel">Annuleer</string>
+    <string name="confirm">Bevestig</string>
 </resources>

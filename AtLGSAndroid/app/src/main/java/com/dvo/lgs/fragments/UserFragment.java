@@ -16,13 +16,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.dvo.lgs.R;
+import com.dvo.lgs.adapters.MiniLGSAdapter;
 import com.dvo.lgs.adapters.UserAdapter;
+import com.dvo.lgs.domain.LGS;
 import com.dvo.lgs.domain.User;
 import com.dvo.lgs.enums.Role;
 import com.dvo.lgs.util.OnItemLongClickListener;
@@ -54,6 +59,7 @@ public class UserFragment extends Fragment {
     private String token;
     private boolean isAdmin;
     private long ownUserId;
+    private AlertDialog alertDialog;
 
     public static UserFragment newInstance() {
         UserFragment userFragment = new UserFragment();
@@ -79,23 +85,52 @@ public class UserFragment extends Fragment {
                     if (vibrator != null) {
                         vibrator.vibrate(50);
                     }
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle(getString(R.string.deletingFront) + getString(R.string.user) + getString(R.string.deletingBack));
-                    builder.setMessage(getString(R.string.deletingFront2) + user.getDisplayName() + getString(R.string.deletingBack2));
-                    builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+                    builder1.setTitle(getString(R.string.user_action) + getString(R.string.user_lowercase) + getString(R.string.question_mark));
+                    builder1.setPositiveButton(R.string.assign_lgs, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            deleteUser(user.getId());
+                            boolean userFound = false;
+                            for (User user : users) {
+                                if (user.getId() == ownUserId && user.getOwnedLGS() == null) {
+                                    userFound = true;
+                                }
+                            }
+                            if (userFound) {
+                                getAllLGSs();
+                            } else {
+                                AlertDialog.Builder builder2 = new AlertDialog.Builder(getContext());
+                                builder2.setTitle(R.string.err_couldnt_assign);
+                                builder2.setMessage(R.string.msg_owns_lgs);
+                                builder2.show();
+                            }
                             dialogInterface.dismiss();
                         }
                     });
-                    builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                    builder1.setNegativeButton(R.string.delete, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
+                            AlertDialog.Builder builder2 = new AlertDialog.Builder(getContext());
+                            builder2.setTitle(getString(R.string.deletingFront) + getString(R.string.user) + getString(R.string.deletingBack));
+                            builder2.setMessage(getString(R.string.deletingFront2) + user.getDisplayName() + getString(R.string.deletingBack2));
+                            builder2.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    deleteUser(user.getId());
+                                    dialogInterface.dismiss();
+                                }
+                            });
+                            builder2.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            });
+                            builder2.show();
                         }
                     });
-                    builder.show();
+                    builder1.show();
                 }
             }
         });
@@ -256,6 +291,86 @@ public class UserFragment extends Fragment {
                             case "User with the given id doesn't exist.":
                                 createNewErrorDialog(R.string.err_user_id_exist);
                                 break;
+                            default:
+                                createNewErrorDialog(R.string.err_something_wrong);
+                                break;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        createNewErrorDialog(R.string.err_something_wrong);
+                    }
+                }
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put("Authorization","Bearer " + token);
+                return headers;
+            }
+        };
+        AppController.getInstance().addToRequestQueue(validationRequest, requestTag);
+    }
+
+    private void getAllLGSs() {
+        String requestTag = "get_all_lgs_request";
+        String url = getString(R.string.api_url) + "/lgs";
+        BetterStringRequest validationRequest = new BetterStringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(VOLLEY_TAG, response);
+                try {
+                    JSONObject json = new JSONObject(response);
+                    JSONArray lgsJsonArray = json.getJSONArray("object");
+                    List<LGS> lgsList = new ArrayList<>();
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    LayoutInflater inflater = getActivity().getLayoutInflater();
+                    View dialogView = inflater.inflate(R.layout.dialog_select_lgs, null);
+                    builder.setView(dialogView);
+                    Spinner spinner = dialogView.findViewById(R.id.rvSelectLGS);
+                    List<String> spinnerArray =  new ArrayList<>();
+                    for (int i = 0; i < lgsJsonArray.length(); i++) {
+                        JSONObject lgsJsonObject = (JSONObject) lgsJsonArray.get(i);
+                        LGS lgs = new Gson().fromJson(lgsJsonObject.toString(),LGS.class);
+                        lgsList.add(lgs);
+                        spinnerArray.add(lgs.getName());
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    Button confirmButton = dialogView.findViewById(R.id.btnConfirmSelectionLGS);
+                    confirmButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertDialog.dismiss();
+                            //TODO
+                        }
+                    });
+                    Button cancelButton = dialogView.findViewById(R.id.btnCancelSelectionLGS);
+                    cancelButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertDialog.dismiss();
+                        }
+                    });
+                    alertDialog = builder.show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String jsonString = error.getMessage();
+                if (jsonString == null || jsonString.isEmpty()) {
+                    createNewErrorDialog(R.string.err_something_wrong);
+                } else {
+                    Log.e(VOLLEY_TAG, jsonString);
+                    try {
+                        JSONObject json = new JSONObject(jsonString);
+                        String message = json.getString("message");
+                        switch (message) {
                             default:
                                 createNewErrorDialog(R.string.err_something_wrong);
                                 break;

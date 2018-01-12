@@ -43,7 +43,7 @@
     <string name="city">City</string>
     <string name="err_lgs_id_exist">LGS with the given id doesn\'t exist.</string>
     <string name="deletingFront">Deleting</string>
-    <string name="deletingBack" />
+    <string name="deletingBack"/>
     <string name="deletingFront2">"Are you sure you want to delete "</string>
     <string name="deletingBack2">\?</string>
     <string name="yes">Yes</string>
@@ -55,4 +55,13 @@
     <string name="cd_ic_lgs">Icon for local game stores</string>
     <string name="settings">Settings</string>
     <string name="err_user_id_exist">User with the given id doesn\'t exist.</string>
+    <string name="user_action">"What do you want to do with this "</string>
+    <string name="question_mark" translatable="false">\?</string>
+    <string name="delete">Delete</string>
+    <string name="user_lowercase">user</string>
+    <string name="assign_lgs">Assign LGS</string>
+    <string name="err_couldnt_assign">Couldn\'t Assign LGS</string>
+    <string name="msg_owns_lgs">This user already owns an LGS</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
 </resources>

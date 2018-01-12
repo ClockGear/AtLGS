@@ -21,7 +21,7 @@
       <file leaf-file-name="UserController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/rest/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3">
+            <state relative-caret-position="-387">
               <caret line="70" column="0" lean-forward="true" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
               <folding>
                 <element signature="method#register#0;class#UserController#0" expanded="false" />
@@ -55,6 +55,18 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="User.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/domain/User.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="432">
+              <caret line="138" column="0" lean-forward="true" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
+              <folding>
+                <element signature="method#User#0;class#User#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="GameEvent.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/domain/GameEvent.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -70,7 +82,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Presence.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Presence.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/domain/Presence.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1953">
@@ -558,12 +570,12 @@
       <workItem from="1513935005039" duration="6890000" />
       <workItem from="1514385594099" duration="2368000" />
       <workItem from="1515414653216" duration="284000" />
-      <workItem from="1515751128709" duration="13810000" />
+      <workItem from="1515751128709" duration="15565000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="100303000" />
+    <option name="totallyTimeSpent" value="102058000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -918,33 +930,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/domain/LGS.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="16" column="22" lean-forward="true" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/enums/EmailDisplayOption.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/domain/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="36" column="124" lean-forward="false" selection-start-line="36" selection-start-column="124" selection-end-line="36" selection-end-column="124" />
-          <folding>
-            <element signature="method#User#0;class#User#0" expanded="false" />
-            <element signature="e#2822#2823#0" expanded="false" />
-            <element signature="e#2863#2864#0" expanded="false" />
-            <element signature="e#3058#3059#0" expanded="false" />
-            <element signature="e#3098#3099#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -988,7 +978,7 @@
         <state relative-caret-position="528">
           <caret line="49" column="58" lean-forward="true" selection-start-line="49" selection-start-column="58" selection-end-line="49" selection-end-column="58" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1009,7 +999,7 @@
         <state relative-caret-position="255">
           <caret line="60" column="41" lean-forward="true" selection-start-line="60" selection-start-column="41" selection-end-line="60" selection-end-column="41" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1019,31 +1009,6 @@
         <state relative-caret-position="-828">
           <caret line="24" column="13" lean-forward="false" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/rest/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3">
-          <caret line="70" column="0" lean-forward="true" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
-          <folding>
-            <element signature="method#register#0;class#UserController#0" expanded="false" />
-            <element signature="method#login#0;class#UserController#0" expanded="false" />
-            <element signature="method#validateToken#0;class#UserController#0" expanded="false" />
-            <element signature="method#editUserSettings#0;class#UserController#0" expanded="false" />
-            <element signature="method#editRole#0;class#UserController#0" expanded="false" />
-            <element signature="method#getUsers#0;class#UserController#0" expanded="false" />
-            <element signature="method#removeUser#0;class#UserController#0" expanded="false" />
-            <element signature="n#!!doc;n#generateSalt#0;n#UserController#0" expanded="false" />
-            <element signature="e#8159#8181#0" expanded="false" />
-            <element signature="method#generateSalt#0;class#UserController#0" expanded="false" />
-            <element signature="method#hash#0;class#UserController#0" expanded="false" />
-            <element signature="method#addSalt#0;class#UserController#0" expanded="false" />
-            <element signature="e#9314#9329#0" expanded="false" />
-            <element signature="method#generateToken#0;class#UserController#0" expanded="false" />
-            <element signature="method#generateTokenExpiration#0;class#UserController#0" expanded="false" />
-            <element signature="method#bytesToHex#0;class#UserController#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1077,6 +1042,49 @@
             <element signature="e#2735#2736#0" expanded="true" />
             <element signature="e#2772#2773#0" expanded="true" />
             <element signature="e#2812#2813#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/domain/LGS.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-30">
+          <caret line="16" column="22" lean-forward="true" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/rest/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-387">
+          <caret line="70" column="0" lean-forward="true" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+          <folding>
+            <element signature="method#register#0;class#UserController#0" expanded="false" />
+            <element signature="method#login#0;class#UserController#0" expanded="false" />
+            <element signature="method#validateToken#0;class#UserController#0" expanded="false" />
+            <element signature="method#editUserSettings#0;class#UserController#0" expanded="false" />
+            <element signature="method#editRole#0;class#UserController#0" expanded="false" />
+            <element signature="method#getUsers#0;class#UserController#0" expanded="false" />
+            <element signature="method#removeUser#0;class#UserController#0" expanded="false" />
+            <element signature="n#!!doc;n#generateSalt#0;n#UserController#0" expanded="false" />
+            <element signature="e#8159#8181#0" expanded="false" />
+            <element signature="method#generateSalt#0;class#UserController#0" expanded="false" />
+            <element signature="method#hash#0;class#UserController#0" expanded="false" />
+            <element signature="method#addSalt#0;class#UserController#0" expanded="false" />
+            <element signature="e#9314#9329#0" expanded="false" />
+            <element signature="method#generateToken#0;class#UserController#0" expanded="false" />
+            <element signature="method#generateTokenExpiration#0;class#UserController#0" expanded="false" />
+            <element signature="method#bytesToHex#0;class#UserController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/domain/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="138" column="0" lean-forward="true" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
+          <folding>
+            <element signature="method#User#0;class#User#0" expanded="false" />
           </folding>
         </state>
       </provider>
