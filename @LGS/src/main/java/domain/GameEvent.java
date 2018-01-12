@@ -18,6 +18,7 @@ public class GameEvent {
     private long id;
     private String name;
     private String description;
+    private Date date;
     private Date startTime;
     private Date endTime;
     private double price;
@@ -28,12 +29,14 @@ public class GameEvent {
     @ManyToOne
     private LGS lgs;
 
-    private static final SimpleDateFormat SDF = new SimpleDateFormat("hh:mm");
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("HH:mm");
+    private static final SimpleDateFormat SDF2 = new SimpleDateFormat("dd-MM-yyyy");
 
-    public GameEvent(long id, String name, String description, Date startTime, Date endTime, double price, Format format, LGS lgs) {
+    public GameEvent(long id, String name, String description, Date date, Date startTime, Date endTime, double price, Format format, LGS lgs) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.price = price;
@@ -41,11 +44,12 @@ public class GameEvent {
         this.lgs = lgs;
     }
 
-    public GameEvent(long id, String name, String description, String startTimeString, String endTimeString, double price, Format format, LGS lgs) {
+    public GameEvent(long id, String name, String description, String dateString, String startTimeString, String endTimeString, double price, Format format, LGS lgs) {
         this.id = id;
         this.name = name;
         this.description = description;
         try {
+            this.date = SDF2.parse(dateString);
             this.startTime = SDF.parse(startTimeString);
             this.endTime = SDF.parse(endTimeString);
         } catch (ParseException e) {
@@ -56,9 +60,10 @@ public class GameEvent {
         this.lgs = lgs;
     }
 
-    public GameEvent(String name, String description, Date startTime, Date endTime, double price, Format format, LGS lgs) {
+    public GameEvent(String name, String description, Date date , Date startTime, Date endTime, double price, Format format, LGS lgs) {
         this.name = name;
         this.description = description;
+        this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.price = price;
@@ -66,10 +71,11 @@ public class GameEvent {
         this.lgs = lgs;
     }
 
-    public GameEvent(String name, String description, String startTimeString, String endTimeString, double price, Format format, LGS lgs) {
+    public GameEvent(String name, String description, String dateString, String startTimeString, String endTimeString, double price, Format format, LGS lgs) {
         this.name = name;
         this.description = description;
         try {
+            this.date = SDF2.parse(dateString);
             this.startTime = SDF.parse(startTimeString);
             this.endTime = SDF.parse(endTimeString);
         } catch (ParseException e) {
@@ -94,6 +100,14 @@ public class GameEvent {
 
     public String getDescription() {
         return description;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public String getDateString() {
+        return SDF2.format(date);
     }
 
     public Date getStartTime() {

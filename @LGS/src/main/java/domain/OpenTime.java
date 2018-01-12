@@ -25,7 +25,7 @@ public class OpenTime {
     @ManyToOne
     private LGS lgs;
 
-    private static final SimpleDateFormat SDF = new SimpleDateFormat("hh:mm");
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("HH:mm");
 
     public OpenTime(long id, WeekDay day, Date openTime, Date closeTime, LGS lgs) {
         this.id = id;

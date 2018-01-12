@@ -16,20 +16,20 @@ public class Format {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    private String description;
     private Game game;
+    private String abbreviation;
 
-    public Format(long id, String name, String description, Game game) {
+    public Format(long id, String name, Game game, String abbreviation) {
         this.id = id;
         this.name = name;
-        this.description = description;
         this.game = game;
+        this.abbreviation = abbreviation;
     }
 
-    public Format(String name, String description, Game game) {
+    public Format(String name, Game game, String abbreviation) {
         this.name = name;
-        this.description = description;
         this.game = game;
+        this.abbreviation = abbreviation;
     }
 
     public Format() {
@@ -43,11 +43,11 @@ public class Format {
         return name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public Game getGame() {
         return game;
+    }
+
+    public String getAbbreviation() {
+        return abbreviation;
     }
 }
