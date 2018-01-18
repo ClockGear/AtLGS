@@ -59,4 +59,5 @@
     <string name="msg_owns_lgs">Deze gebruiker bezit al een LGS</string>
     <string name="cancel">Annuleer</string>
     <string name="confirm">Bevestig</string>
+    <string name="assign_success">Succesvol Gebruiker aan LGS gekoppeld</string>
 </resources>

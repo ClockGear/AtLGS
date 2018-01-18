@@ -42,7 +42,7 @@ public class User {
         this.email = email;
         this.role = role;
         this.salt = salt;
-        this.nameDisplayOption = NameDisplayOption.ANONYMOUS;
+        this.nameDisplayOption = NameDisplayOption.FIRST_NAME_LAST_INITIAL;
         this.emailDisplayOption = EmailDisplayOption.INVISIBLE;
         this.ownedLGS = ownedLGS;
     }

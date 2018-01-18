@@ -16,15 +16,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.dvo.lgs.R;
+import com.dvo.lgs.adapters.LGSDialogAdapter;
 import com.dvo.lgs.adapters.MiniLGSAdapter;
 import com.dvo.lgs.adapters.UserAdapter;
 import com.dvo.lgs.domain.LGS;
@@ -80,7 +84,8 @@ public class UserFragment extends Fragment {
             @Override
             public void onItemLongClick(int position) {
                 final User user = users.get(position);
-                if (isAdmin && user.getId() != ownUserId) {
+                final long chosenUserId = user.getId();
+                if (isAdmin && chosenUserId != ownUserId) {
                     Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
                     if (vibrator != null) {
                         vibrator.vibrate(50);
@@ -92,12 +97,12 @@ public class UserFragment extends Fragment {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             boolean userFound = false;
                             for (User user : users) {
-                                if (user.getId() == ownUserId && user.getOwnedLGS() == null) {
+                                if (user.getId() == chosenUserId && user.getOwnedLGS() == null) {
                                     userFound = true;
                                 }
                             }
                             if (userFound) {
-                                getAllLGSs();
+                                getAllLGSs(chosenUserId);
                             } else {
                                 AlertDialog.Builder builder2 = new AlertDialog.Builder(getContext());
                                 builder2.setTitle(R.string.err_couldnt_assign);
@@ -312,7 +317,7 @@ public class UserFragment extends Fragment {
         AppController.getInstance().addToRequestQueue(validationRequest, requestTag);
     }
 
-    private void getAllLGSs() {
+    private void getAllLGSs(final long chosenUserId) {
         String requestTag = "get_all_lgs_request";
         String url = getString(R.string.api_url) + "/lgs";
         BetterStringRequest validationRequest = new BetterStringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -322,38 +327,28 @@ public class UserFragment extends Fragment {
                 try {
                     JSONObject json = new JSONObject(response);
                     JSONArray lgsJsonArray = json.getJSONArray("object");
-                    List<LGS> lgsList = new ArrayList<>();
+                    final List<LGS> lgsList = new ArrayList<>();
                     final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     LayoutInflater inflater = getActivity().getLayoutInflater();
                     View dialogView = inflater.inflate(R.layout.dialog_select_lgs, null);
                     builder.setView(dialogView);
-                    Spinner spinner = dialogView.findViewById(R.id.rvSelectLGS);
-                    List<String> spinnerArray =  new ArrayList<>();
+                    ListView listView = dialogView.findViewById(R.id.rvSelectLGS);
                     for (int i = 0; i < lgsJsonArray.length(); i++) {
                         JSONObject lgsJsonObject = (JSONObject) lgsJsonArray.get(i);
                         LGS lgs = new Gson().fromJson(lgsJsonObject.toString(),LGS.class);
                         lgsList.add(lgs);
-                        spinnerArray.add(lgs.getName());
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                    Button confirmButton = dialogView.findViewById(R.id.btnConfirmSelectionLGS);
-                    confirmButton.setOnClickListener(new View.OnClickListener() {
+                    LGSDialogAdapter LGSAdapter = new LGSDialogAdapter(getContext(), lgsList);
+                    listView.setAdapter(LGSAdapter);
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
-                        public void onClick(View view) {
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                             alertDialog.dismiss();
-                            //TODO
+                            LGS lgs = lgsList.get(i);
+                            changeRole(chosenUserId, lgs);
                         }
                     });
-                    Button cancelButton = dialogView.findViewById(R.id.btnCancelSelectionLGS);
-                    cancelButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alertDialog.dismiss();
-                        }
-                    });
+                    LGSAdapter.notifyDataSetChanged();
                     alertDialog = builder.show();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -387,6 +382,61 @@ public class UserFragment extends Fragment {
                 Map<String,String> headers = new HashMap<>();
                 headers.put("Authorization","Bearer " + token);
                 return headers;
+            }
+        };
+        AppController.getInstance().addToRequestQueue(validationRequest, requestTag);
+    }
+
+    private void changeRole(final long chosenUserId, final LGS lgs) {
+        String requestTag = "change_role_request";
+        String url = getString(R.string.api_url) + "/user/role";
+        BetterStringRequest validationRequest = new BetterStringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(VOLLEY_TAG, response);
+                Toast.makeText(getContext(), R.string.assign_success, Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String jsonString = error.getMessage();
+                if (jsonString == null || jsonString.isEmpty()) {
+                    createNewErrorDialog(R.string.err_something_wrong);
+                } else {
+                    Log.e(VOLLEY_TAG, jsonString);
+                    try {
+                        JSONObject json = new JSONObject(jsonString);
+                        String message = json.getString("message");
+                        switch (message) {
+                            case "User with the given id doesn't exist.":
+                                createNewErrorDialog(R.string.err_user_id_exist);
+                                break;
+                            default:
+                                createNewErrorDialog(R.string.err_something_wrong);
+                                break;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        createNewErrorDialog(R.string.err_something_wrong);
+                    }
+                }
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put("Authorization","Bearer " + token);
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("id", String.valueOf(chosenUserId));
+                params.put("role", Role.LGS.getRole());
+                params.put("lgsId", String.valueOf(lgs.getId()));
+                return params;
             }
         };
         AppController.getInstance().addToRequestQueue(validationRequest, requestTag);
